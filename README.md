@@ -9,8 +9,10 @@
 ## Sorting
 
 - `Bubble` sort
+- `Recursive` bubble sort
 - `Selection` sort
 - `Insertion` sort
+- `Recursive` insertion sort
 - `Merge` sort
 - `Quick` sort
 
