@@ -1,10 +1,10 @@
 package search
 
-func linearSearch(target int, array []int) bool {
-	for _, value := range array {
+func LinearSearch(target int, array []int) (bool, int) {
+	for idx, value := range array {
 		if target == value {
-			return true
+			return true, idx
 		}
 	}
-	return false
+	return false, -1
 }
