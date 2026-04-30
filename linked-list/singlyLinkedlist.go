@@ -111,6 +111,26 @@ func (sll *singlyLinkedList) Update(data, replace int) (bool, int) {
 	return false, 0
 }
 
+// reverse the linked list
+func (sll *singlyLinkedList) Reverse() {
+	tempLinkedList := NewSinglyLinkedList()
+
+	currentNode := sll.head
+
+	if currentNode == nil {
+		fmt.Println("Linked list is empty.")
+		return
+	}
+
+	for currentNode != nil {
+		tempLinkedList.ShiftItem(currentNode.data)
+		currentNode = currentNode.next
+	}
+
+	sll.head = tempLinkedList.head
+}
+
+
 // tell how many element the linked list have
 func (sll *singlyLinkedList) Count() int {
 	return sll.count
