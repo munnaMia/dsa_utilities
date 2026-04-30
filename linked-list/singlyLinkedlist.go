@@ -9,7 +9,6 @@ type singlyLinkedList struct {
 }
 
 func NewSinglyLinkedList() *singlyLinkedList {
-	// return empty linked list
 	return &singlyLinkedList{
 		count: 0,
 	}
@@ -70,7 +69,26 @@ func (sll *singlyLinkedList) ShowTail() (int, error) {
 	return sll.tail.data, nil
 }
 
-// tell how many element the
+// search an element on linked list and return boolean
+func (sll *singlyLinkedList) Search(data int) bool {
+	tempNode := sll.head
+
+	if tempNode == nil {
+		fmt.Println("Linked list is empty.")
+		return false
+	}
+
+	for tempNode != nil {
+		if tempNode.data == data {
+			return true
+		}
+		tempNode = tempNode.next
+	}
+
+	return false
+}
+
+// tell how many element the linked list have
 func (sll *singlyLinkedList) Count() int {
 	return sll.count
 }
