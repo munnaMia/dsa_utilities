@@ -88,6 +88,29 @@ func (sll *singlyLinkedList) Search(data int) bool {
 	return false
 }
 
+// search an element on linked list and update with the replace data if exist and update the first match data.
+// return the old data and success status
+func (sll *singlyLinkedList) Update(data, replace int) (bool, int) {
+	tempNode := sll.head
+
+	if tempNode == nil {
+		fmt.Println("Linked list is empty.")
+		return false, 0
+	}
+
+	for tempNode != nil {
+		if tempNode.data == data {
+			oldData := tempNode.data
+			tempNode.data = replace
+
+			return true, oldData
+		}
+		tempNode = tempNode.next
+	}
+
+	return false, 0
+}
+
 // tell how many element the linked list have
 func (sll *singlyLinkedList) Count() int {
 	return sll.count
