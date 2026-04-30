@@ -15,7 +15,7 @@ func NewSinglyLinkedList() *singlyLinkedList {
 }
 
 // append element on the end on singly linked list
-func (sll *singlyLinkedList) AppendItem(data int) {
+func (sll *singlyLinkedList) Push(data int) {
 	defer sll.incrementCounter()
 
 	// if the linked list is empty
@@ -38,7 +38,7 @@ func (sll *singlyLinkedList) AppendItem(data int) {
 }
 
 // push element on the beginning
-func (sll *singlyLinkedList) ShiftItem(data int) {
+func (sll *singlyLinkedList) AddFirst(data int) {
 	defer sll.incrementCounter()
 
 	newNode := &Node{
@@ -123,13 +123,43 @@ func (sll *singlyLinkedList) Reverse() {
 	}
 
 	for currentNode != nil {
-		tempLinkedList.ShiftItem(currentNode.data)
+		tempLinkedList.AddFirst(currentNode.data)
 		currentNode = currentNode.next
 	}
 
 	sll.head = tempLinkedList.head
 }
 
+// delete first matched element and return the deleted element
+func (sll *singlyLinkedList) Delete(data int) (bool, int) {
+	previous := sll.head
+	current := sll.head.next
+
+	if previous == nil {
+		fmt.Println("Linked list is empty.")
+		return false, 0
+	}
+
+	// if the head match first
+	if previous.data == data {
+		sll.head = sll.head.next
+		return true, sll.head.data
+	}
+
+	for current != nil {
+		if current.data == data {
+			oldData := current.data
+			previous.next = current.next // unlink
+
+			return true, oldData
+		}
+		// move the pointer
+		previous = current
+		current = current.next
+	}
+
+	return false, 0
+}
 
 // tell how many element the linked list have
 func (sll *singlyLinkedList) Count() int {
