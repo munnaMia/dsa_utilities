@@ -3,25 +3,28 @@ package linkedlist
 import "fmt"
 
 type singlyLinkedList struct {
-	head *Node
-	tail *Node
+	head  *Node
+	tail  *Node
+	count int
 }
 
 func NewSinglyLinkedList() *singlyLinkedList {
-	return &singlyLinkedList{}
+	// return empty linked list
+	return &singlyLinkedList{
+		count: 0,
+	}
 }
 
 // append element on the end on singly linked list
 func (sll *singlyLinkedList) AppendItem(data int) {
+	defer sll.incrementCounter()
 
 	// if the linked list is empty
 	if sll.head == nil {
-		// init head
 		sll.head = &Node{
 			data: data,
 		}
 
-		// init tail
 		sll.tail = sll.head
 		return
 	}
@@ -37,6 +40,8 @@ func (sll *singlyLinkedList) AppendItem(data int) {
 
 // push element on the beginning
 func (sll *singlyLinkedList) ShiftItem(data int) {
+	defer sll.incrementCounter()
+
 	newNode := &Node{
 		data: data,
 		next: sll.head,
@@ -63,6 +68,15 @@ func (sll *singlyLinkedList) ShowTail() (int, error) {
 		return 0, fmt.Errorf("Linked list is empty.")
 	}
 	return sll.tail.data, nil
+}
+
+// tell how many element the
+func (sll *singlyLinkedList) Count() int {
+	return sll.count
+}
+
+func (sll *singlyLinkedList) incrementCounter() {
+	sll.count++
 }
 
 // Print the single linked list
