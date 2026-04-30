@@ -1,16 +1,18 @@
 package linkedlist
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type singlyLinkedList struct {
-	head  *Node
-	tail  *Node
-	count int
+	head   *Node
+	tail   *Node
+	length int
 }
 
 func NewSinglyLinkedList() *singlyLinkedList {
 	return &singlyLinkedList{
-		count: 0,
+		length: 0,
 	}
 }
 
@@ -67,6 +69,30 @@ func (sll *singlyLinkedList) ShowTail() (int, error) {
 		return 0, fmt.Errorf("Linked list is empty.")
 	}
 	return sll.tail.data, nil
+}
+
+// tell how many element the linked list have
+func (sll *singlyLinkedList) Length() int {
+	return sll.length
+}
+
+func (sll *singlyLinkedList) incrementCounter() {
+	sll.length++
+}
+
+// Print the single linked list
+func (sll *singlyLinkedList) PrintList() {
+	tempHead := sll.head
+
+	if tempHead == nil {
+		fmt.Println("Linked list is empty.")
+		return
+	}
+
+	for tempHead != nil {
+		fmt.Println("Data :", tempHead.data)
+		tempHead = tempHead.next
+	}
 }
 
 // search an element on linked list and return boolean
@@ -161,26 +187,44 @@ func (sll *singlyLinkedList) Delete(data int) (bool, int) {
 	return false, 0
 }
 
-// tell how many element the linked list have
-func (sll *singlyLinkedList) Count() int {
-	return sll.count
+// delete head node.
+func (sll *singlyLinkedList) DeleteHead(data int) (bool, int) {
+	currentNode := sll.head
+
+	if currentNode == nil {
+		fmt.Println("Linked list is empty.")
+		return false, 0
+	}
+
+	deletedValue := sll.head.data
+
+	if sll.head.next == nil {
+		sll.head = nil
+		return true, deletedValue
+	}
+
+	sll.head = sll.head.next
+	return true, deletedValue
 }
 
-func (sll *singlyLinkedList) incrementCounter() {
-	sll.count++
+// check the linked list is empty or not
+func (sll *singlyLinkedList) IsEmpty() bool {
+	if sll.head == nil {
+		return true
+	}
+	return false
 }
 
-// Print the single linked list
-func (sll *singlyLinkedList) PrintList() {
+// covert the linked list into slice
+func (sll *singlyLinkedList) ToSlice() []int {
+	llSlice := []int{}
+
 	tempHead := sll.head
 
-	if tempHead == nil {
-		fmt.Println("Linked list is empty.")
-		return
-	}
-
 	for tempHead != nil {
-		fmt.Println("Data :", tempHead.data)
+		llSlice = append(llSlice, tempHead.data)
 		tempHead = tempHead.next
 	}
+
+	return llSlice
 }
