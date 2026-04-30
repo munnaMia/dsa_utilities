@@ -1,230 +1,98 @@
 package linkedlist
 
-import (
-	"fmt"
-)
-
 type singlyLinkedList struct {
-	head   *Node
-	tail   *Node
-	length int
 }
 
-func NewSinglyLinkedList() *singlyLinkedList {
-	return &singlyLinkedList{
-		length: 0,
-	}
-}
+func NewSinglyLinkedList() *singlyLinkedList
+
+/*
+	Insertion ------------------------------------------------------------
+*/
 
 // append element on the end on singly linked list
-func (sll *singlyLinkedList) Push(data int) {
-	defer sll.incrementCounter()
-
-	// if the linked list is empty
-	if sll.head == nil {
-		sll.head = &Node{
-			data: data,
-		}
-
-		sll.tail = sll.head
-		return
-	}
-
-	// storing element on the tail
-	sll.tail.next = &Node{
-		data: data,
-	}
-
-	// move the tail to the end
-	sll.tail = sll.tail.next
-}
+func (sll *singlyLinkedList) InsertAtHead(data any)
 
 // push element on the beginning
-func (sll *singlyLinkedList) AddFirst(data int) {
-	defer sll.incrementCounter()
+func (sll *singlyLinkedList) InsertAtTail(data any)
 
-	newNode := &Node{
-		data: data,
-		next: sll.head,
-	}
+// Adds a node at a specific position.
+func (sll *singlyLinkedList) InsertAt(index int, data any) error
 
-	sll.head = newNode
-}
+// Inserts new data right after a specific existing value.
+func (sll *singlyLinkedList) InsertAfter(targetData any, newData any) error
 
-// show the head node value
-func (sll *singlyLinkedList) ShowHead() (int, error) {
-	tempHead := sll.head
+// Inserts new data right after a specific existing value.
+func (sll *singlyLinkedList) InsertBefore(targetData any, newData any) error
 
-	if tempHead == nil {
-		return 0, fmt.Errorf("Linked list is empty.")
-	}
-	return sll.head.data, nil
-}
-
-// show the tail node value
-func (sll *singlyLinkedList) ShowTail() (int, error) {
-	tempTail := sll.tail
-
-	if tempTail == nil {
-		return 0, fmt.Errorf("Linked list is empty.")
-	}
-	return sll.tail.data, nil
-}
-
-// tell how many element the linked list have
-func (sll *singlyLinkedList) Length() int {
-	return sll.length
-}
-
-func (sll *singlyLinkedList) incrementCounter() {
-	sll.length++
-}
-
-// Print the single linked list
-func (sll *singlyLinkedList) PrintList() {
-	tempHead := sll.head
-
-	if tempHead == nil {
-		fmt.Println("Linked list is empty.")
-		return
-	}
-
-	for tempHead != nil {
-		fmt.Println("Data :", tempHead.data)
-		tempHead = tempHead.next
-	}
-}
-
-// search an element on linked list and return boolean
-func (sll *singlyLinkedList) Search(data int) bool {
-	tempNode := sll.head
-
-	if tempNode == nil {
-		fmt.Println("Linked list is empty.")
-		return false
-	}
-
-	for tempNode != nil {
-		if tempNode.data == data {
-			return true
-		}
-		tempNode = tempNode.next
-	}
-
-	return false
-}
-
-// search an element on linked list and update with the replace data if exist and update the first match data.
-// return the old data and success status
-func (sll *singlyLinkedList) Update(data, replace int) (bool, int) {
-	tempNode := sll.head
-
-	if tempNode == nil {
-		fmt.Println("Linked list is empty.")
-		return false, 0
-	}
-
-	for tempNode != nil {
-		if tempNode.data == data {
-			oldData := tempNode.data
-			tempNode.data = replace
-
-			return true, oldData
-		}
-		tempNode = tempNode.next
-	}
-
-	return false, 0
-}
-
-// reverse the linked list
-func (sll *singlyLinkedList) Reverse() {
-	tempLinkedList := NewSinglyLinkedList()
-
-	currentNode := sll.head
-
-	if currentNode == nil {
-		fmt.Println("Linked list is empty.")
-		return
-	}
-
-	for currentNode != nil {
-		tempLinkedList.AddFirst(currentNode.data)
-		currentNode = currentNode.next
-	}
-
-	sll.head = tempLinkedList.head
-}
+/*
+	Deletation ------------------------------------------------------------
+*/
 
 // delete first matched element and return the deleted element
-func (sll *singlyLinkedList) Delete(data int) (bool, int) {
-	previous := sll.head
-	current := sll.head.next
-
-	if previous == nil {
-		fmt.Println("Linked list is empty.")
-		return false, 0
-	}
-
-	// if the head match first
-	if previous.data == data {
-		sll.head = sll.head.next
-		return true, sll.head.data
-	}
-
-	for current != nil {
-		if current.data == data {
-			oldData := current.data
-			previous.next = current.next // unlink
-
-			return true, oldData
-		}
-		// move the pointer
-		previous = current
-		current = current.next
-	}
-
-	return false, 0
-}
+func (sll *singlyLinkedList) Delete(data any) (bool, any)
 
 // delete head node.
-func (sll *singlyLinkedList) DeleteHead(data int) (bool, int) {
-	currentNode := sll.head
+func (sll *singlyLinkedList) DeleteHead() (bool, any)
 
-	if currentNode == nil {
-		fmt.Println("Linked list is empty.")
-		return false, 0
-	}
+// delete tail node.
+func (sll *singlyLinkedList) DeleteTail() (bool, any)
 
-	deletedValue := sll.head.data
+// Removes a node based on its numerical position.
+func (sll *singlyLinkedList) DeleteAt(index int)
 
-	if sll.head.next == nil {
-		sll.head = nil
-		return true, deletedValue
-	}
+// Keeps the first $n$ elements and deletes the rest.
+func (sll *singlyLinkedList) Truncate(n int)
 
-	sll.head = sll.head.next
-	return true, deletedValue
-}
+/*
+	Access & Search Methods ------------------------------------------------------------
+*/
 
-// check the linked list is empty or not
-func (sll *singlyLinkedList) IsEmpty() bool {
-	if sll.head == nil {
-		return true
-	}
-	return false
-}
+// show the head node value
+func (sll *singlyLinkedList) GetHead() (any, error)
+
+// show the tail node value
+func (sll *singlyLinkedList) GetTail() (any, error)
+
+// get an element of an given index
+func (sll *singlyLinkedList) GetAt(index int)
+
+// search an element on linked list and return boolean
+func (sll *singlyLinkedList) Search(data any) bool
+
+// Returns a simple true/false if the value is in the list.
+func (sll *singlyLinkedList) Contains(data any)
+
+/*
+	Transformation Methods ------------------------------------------------------------
+*/
+
+// Replaces a specific value with a new one.
+func (sll *singlyLinkedList) Update(data, replace any) (bool, any)
+
+// reverse the linked list
+func (sll *singlyLinkedList) Reverse()
+
+// sort the linked list
+func (sll *singlyLinkedList) Sort()
+
+// Scans the list and removes nodes with repeating values
+func (sll *singlyLinkedList) RemoveDuplicates()
 
 // covert the linked list into slice
-func (sll *singlyLinkedList) ToSlice() []int {
-	llSlice := []int{}
+func (sll *singlyLinkedList) ToSlice() []any
 
-	tempHead := sll.head
+/*
+	Metadata & Utility Methods ------------------------------------------------------------
+*/
 
-	for tempHead != nil {
-		llSlice = append(llSlice, tempHead.data)
-		tempHead = tempHead.next
-	}
+// tell how many element the linked list have
+func (sll *singlyLinkedList) Length() int
 
-	return llSlice
-}
+// check the linked list is empty or not
+func (sll *singlyLinkedList) IsEmpty() bool
+
+// Print the single linked list
+func (sll *singlyLinkedList) PrintList()
+
+// clear the whole linked list
+func (sll *singlyLinkedList) Clear()
