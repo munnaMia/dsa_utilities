@@ -35,7 +35,6 @@ func (sll *singlyLinkedList) AppendItem(data int) {
 	sll.tail = sll.tail.next
 }
 
-
 // push element on the beginning
 func (sll *singlyLinkedList) ShiftItem(data int) {
 	newNode := &Node{
@@ -44,6 +43,26 @@ func (sll *singlyLinkedList) ShiftItem(data int) {
 	}
 
 	sll.head = newNode
+}
+
+// show the head node value
+func (sll *singlyLinkedList) ShowHead() (int, error) {
+	tempHead := sll.head
+
+	if tempHead == nil {
+		return 0, fmt.Errorf("Linked list is empty.")
+	}
+	return sll.head.data, nil
+}
+
+// show the tail node value
+func (sll *singlyLinkedList) ShowTail() (int, error) {
+	tempTail := sll.tail
+
+	if tempTail == nil {
+		return 0, fmt.Errorf("Linked list is empty.")
+	}
+	return sll.tail.data, nil
 }
 
 // Print the single linked list
@@ -60,4 +79,3 @@ func (sll *singlyLinkedList) PrintList() {
 		tempHead = tempHead.next
 	}
 }
-
