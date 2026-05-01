@@ -106,7 +106,23 @@ func (sll *singlyLinkedList) GetTail() (any, error) {
 // func (sll *singlyLinkedList) GetAt(index int)
 
 // // search an element on linked list and return boolean
-// func (sll *singlyLinkedList) Search(data any) bool
+func (sll *singlyLinkedList) Search(data any) bool {
+	if sll.IsEmpty() {
+		fmt.Println("Linked list is empty.")
+		return false
+	}
+
+	currentNode := sll.head
+
+	for currentNode != nil {
+		if currentNode.data == data {
+			return true
+		}
+		currentNode = currentNode.next
+	}
+
+	return false
+}
 
 // // Returns a simple true/false if the value is in the list.
 // func (sll *singlyLinkedList) Contains(data any)

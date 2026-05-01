@@ -2,21 +2,6 @@ package linkedlist
 
 
 
-// // Print the single linked list
-// func (sll *singlyLinkedList) PrintList() {
-// 	tempHead := sll.head
-
-// 	if tempHead == nil {
-// 		fmt.Println("Linked list is empty.")
-// 		return
-// 	}
-
-// 	for tempHead != nil {
-// 		fmt.Println("Data :", tempHead.data)
-// 		tempHead = tempHead.next
-// 	}
-// }
-
 // // search an element on linked list and return boolean
 // func (sll *singlyLinkedList) Search(data any) bool {
 // 	tempNode := sll.head
