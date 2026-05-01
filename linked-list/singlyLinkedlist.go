@@ -24,6 +24,18 @@ func NewSinglyLinkedList() *singlyLinkedList {
 func (sll *singlyLinkedList) InsertAtHead(data any) {
 	defer sll.incrementCounter()
 
+	newNode := &Node{
+		data: data,
+		next: sll.head,
+	}
+
+	sll.head = newNode
+}
+
+// push element on the beginning
+func (sll *singlyLinkedList) InsertAtTail(data any) {
+	defer sll.incrementCounter()
+
 	if sll.IsEmpty() {
 		sll.head = &Node{
 			data: data,
@@ -42,55 +54,41 @@ func (sll *singlyLinkedList) InsertAtHead(data any) {
 	sll.tail = sll.tail.next
 }
 
-// push element on the beginning
-func (sll *singlyLinkedList) InsertAtTail(data any) {
-	defer sll.incrementCounter()
+// // Adds a node at a specific position.
+// func (sll *singlyLinkedList) InsertAt(index int, data any) error
 
-	newNode := &Node{
-		data: data,
-		next: sll.head,
-	}
+// // Inserts new data right after a specific existing value.
+// func (sll *singlyLinkedList) InsertAfter(targetData any, newData any) error
 
-	sll.head = newNode
-}
+// // Inserts new data right after a specific existing value.
+// func (sll *singlyLinkedList) InsertBefore(targetData any, newData any) error
 
-// Adds a node at a specific position.
-func (sll *singlyLinkedList) InsertAt(index int, data any) error
+// /*
+// 	Deletation ------------------------------------------------------------
+// */
 
-// Inserts new data right after a specific existing value.
-func (sll *singlyLinkedList) InsertAfter(targetData any, newData any) error
+// // delete first matched element and return the deleted element
+// func (sll *singlyLinkedList) Delete(data any) (bool, any)
 
-// Inserts new data right after a specific existing value.
-func (sll *singlyLinkedList) InsertBefore(targetData any, newData any) error
+// // delete head node.
+// func (sll *singlyLinkedList) DeleteHead() (bool, any)
 
-/*
-	Deletation ------------------------------------------------------------
-*/
+// // delete tail node.
+// func (sll *singlyLinkedList) DeleteTail() (bool, any)
 
-// delete first matched element and return the deleted element
-func (sll *singlyLinkedList) Delete(data any) (bool, any)
+// // Removes a node based on its numerical position.
+// func (sll *singlyLinkedList) DeleteAt(index int)
 
-// delete head node.
-func (sll *singlyLinkedList) DeleteHead() (bool, any)
+// // Keeps the first $n$ elements and deletes the rest.
+// func (sll *singlyLinkedList) Truncate(n int)
 
-// delete tail node.
-func (sll *singlyLinkedList) DeleteTail() (bool, any)
-
-// Removes a node based on its numerical position.
-func (sll *singlyLinkedList) DeleteAt(index int)
-
-// Keeps the first $n$ elements and deletes the rest.
-func (sll *singlyLinkedList) Truncate(n int)
-
-/*
-	Access & Search Methods ------------------------------------------------------------
-*/
+// /*
+// 	Access & Search Methods ------------------------------------------------------------
+// */
 
 // show the head node value
 func (sll *singlyLinkedList) GetHead() (any, error) {
-	tempHead := sll.head
-
-	if tempHead == nil {
+	if sll.IsEmpty() {
 		return 0, fmt.Errorf("Linked list is empty.")
 	}
 	return sll.head.data, nil
@@ -98,59 +96,71 @@ func (sll *singlyLinkedList) GetHead() (any, error) {
 
 // show the tail node value
 func (sll *singlyLinkedList) GetTail() (any, error) {
-	tempTail := sll.tail
-
-	if tempTail == nil {
+	if sll.IsEmpty() {
 		return 0, fmt.Errorf("Linked list is empty.")
 	}
 	return sll.tail.data, nil
 }
 
-// get an element of an given index
-func (sll *singlyLinkedList) GetAt(index int)
+// // get an element of an given index
+// func (sll *singlyLinkedList) GetAt(index int)
 
-// search an element on linked list and return boolean
-func (sll *singlyLinkedList) Search(data any) bool
+// // search an element on linked list and return boolean
+// func (sll *singlyLinkedList) Search(data any) bool
 
-// Returns a simple true/false if the value is in the list.
-func (sll *singlyLinkedList) Contains(data any)
+// // Returns a simple true/false if the value is in the list.
+// func (sll *singlyLinkedList) Contains(data any)
 
-/*
-	Transformation Methods ------------------------------------------------------------
-*/
+// /*
+// 	Transformation Methods ------------------------------------------------------------
+// */
 
-// Replaces a specific value with a new one.
-func (sll *singlyLinkedList) Update(data, replace any) (bool, any)
+// // Replaces a specific value with a new one.
+// func (sll *singlyLinkedList) Update(data, replace any) (bool, any)
 
-// reverse the linked list
-func (sll *singlyLinkedList) Reverse()
+// // reverse the linked list
+// func (sll *singlyLinkedList) Reverse()
 
-// sort the linked list
-func (sll *singlyLinkedList) Sort()
+// // sort the linked list
+// func (sll *singlyLinkedList) Sort()
 
-// Scans the list and removes nodes with repeating values
-func (sll *singlyLinkedList) RemoveDuplicates()
+// // Scans the list and removes nodes with repeating values
+// func (sll *singlyLinkedList) RemoveDuplicates()
 
-// covert the linked list into slice
-func (sll *singlyLinkedList) ToSlice() []any
+// // covert the linked list into slice
+// func (sll *singlyLinkedList) ToSlice() []any
 
-/*
-	Metadata & Utility Methods ------------------------------------------------------------
-*/
+// /*
+// 	Metadata & Utility Methods ------------------------------------------------------------
+// */
 
-// tell how many element the linked list have
-func (sll *singlyLinkedList) Length() int {
-	return sll.length
-}
+// // tell how many element the linked list have
+// func (sll *singlyLinkedList) Length() int {
+// 	return sll.length
+// }
 
 // check the linked list is empty or not
-func (sll *singlyLinkedList) IsEmpty() bool
+func (sll *singlyLinkedList) IsEmpty() bool {
+	return sll.head == nil
+}
 
-// Print the single linked list
-func (sll *singlyLinkedList) PrintList()
+// // Print the single linked list
+func (sll *singlyLinkedList) PrintList() {
+	if sll.IsEmpty() {
+		fmt.Println("Linked list is empty.")
+		return
+	}
 
-// clear the whole linked list
-func (sll *singlyLinkedList) Clear()
+	currentNode := sll.head
+
+	for currentNode != nil {
+		fmt.Println("Data :", currentNode.data)
+		currentNode = currentNode.next
+	}
+}
+
+// // clear the whole linked list
+// func (sll *singlyLinkedList) Clear()
 
 /*
 	private helper methods --------------------------------------------------------------------
