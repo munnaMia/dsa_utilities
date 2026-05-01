@@ -60,7 +60,7 @@ type circularLinkedList struct {
 // func (sll *circularLinkedList) Search(data any) bool
 
 // // Returns a simple true/false if the value is in the list.
-// func (sll *circularLinkedList) Contains(data any)
+// func (sll *circularLinkedList) Contains(data any) bool
 
 // /*
 // 	Transformation Methods ------------------------------------------------------------

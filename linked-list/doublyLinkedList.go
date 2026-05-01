@@ -1,9 +1,18 @@
 package linkedlist
 
 type doublyLinkedList struct {
+	head   *Node
+	tail   *Node
+	length int
 }
 
-// func NewDoublyLinkedList() *doublyLinkedList
+func NewDoublyLinkedList() *doublyLinkedList {
+	return &doublyLinkedList{
+		head:   nil,
+		tail:   nil,
+		length: 0,
+	}
+}
 
 // /*
 // 	Insertion ------------------------------------------------------------
@@ -60,7 +69,7 @@ type doublyLinkedList struct {
 // func (sll *doublyLinkedList) Search(data any) bool
 
 // // Returns a simple true/false if the value is in the list.
-// func (sll *doublyLinkedList) Contains(data any)
+// func (sll *doublyLinkedList) Contains(data any) bool
 
 // /*
 // 	Transformation Methods ------------------------------------------------------------

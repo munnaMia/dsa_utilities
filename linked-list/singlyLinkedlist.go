@@ -171,7 +171,7 @@ func (sll *singlyLinkedList) Search(data any) bool {
 }
 
 // // Returns a simple true/false if the value is in the list.
-// func (sll *singlyLinkedList) Contains(data any)
+// func (sll *singlyLinkedList) Contains(data any) bool
 
 /*
 	Transformation Methods ------------------------------------------------------------
