@@ -1,19 +1,58 @@
 package linkedlist
 
+import "fmt"
+
 type singlyLinkedList struct {
+	head   *Node
+	tail   *Node
+	length int
 }
 
-func NewSinglyLinkedList() *singlyLinkedList
+func NewSinglyLinkedList() *singlyLinkedList {
+	return &singlyLinkedList{
+		head:   nil,
+		tail:   nil,
+		length: 0,
+	}
+}
 
 /*
 	Insertion ------------------------------------------------------------
 */
 
 // append element on the end on singly linked list
-func (sll *singlyLinkedList) InsertAtHead(data any)
+func (sll *singlyLinkedList) InsertAtHead(data any) {
+	defer sll.incrementCounter()
+
+	if sll.IsEmpty() {
+		sll.head = &Node{
+			data: data,
+		}
+
+		sll.tail = sll.head
+		return
+	}
+
+	// storing element on the tail
+	sll.tail.next = &Node{
+		data: data,
+	}
+
+	// move the tail to the end
+	sll.tail = sll.tail.next
+}
 
 // push element on the beginning
-func (sll *singlyLinkedList) InsertAtTail(data any)
+func (sll *singlyLinkedList) InsertAtTail(data any) {
+	defer sll.incrementCounter()
+
+	newNode := &Node{
+		data: data,
+		next: sll.head,
+	}
+
+	sll.head = newNode
+}
 
 // Adds a node at a specific position.
 func (sll *singlyLinkedList) InsertAt(index int, data any) error
@@ -48,10 +87,24 @@ func (sll *singlyLinkedList) Truncate(n int)
 */
 
 // show the head node value
-func (sll *singlyLinkedList) GetHead() (any, error)
+func (sll *singlyLinkedList) GetHead() (any, error) {
+	tempHead := sll.head
+
+	if tempHead == nil {
+		return 0, fmt.Errorf("Linked list is empty.")
+	}
+	return sll.head.data, nil
+}
 
 // show the tail node value
-func (sll *singlyLinkedList) GetTail() (any, error)
+func (sll *singlyLinkedList) GetTail() (any, error) {
+	tempTail := sll.tail
+
+	if tempTail == nil {
+		return 0, fmt.Errorf("Linked list is empty.")
+	}
+	return sll.tail.data, nil
+}
 
 // get an element of an given index
 func (sll *singlyLinkedList) GetAt(index int)
@@ -86,7 +139,9 @@ func (sll *singlyLinkedList) ToSlice() []any
 */
 
 // tell how many element the linked list have
-func (sll *singlyLinkedList) Length() int
+func (sll *singlyLinkedList) Length() int {
+	return sll.length
+}
 
 // check the linked list is empty or not
 func (sll *singlyLinkedList) IsEmpty() bool
@@ -96,3 +151,11 @@ func (sll *singlyLinkedList) PrintList()
 
 // clear the whole linked list
 func (sll *singlyLinkedList) Clear()
+
+/*
+	private helper methods --------------------------------------------------------------------
+*/
+
+func (sll *singlyLinkedList) incrementCounter() {
+	sll.length++ // just increate by one
+}

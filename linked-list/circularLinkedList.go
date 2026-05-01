@@ -96,3 +96,7 @@ func (sll *circularLinkedList) PrintList()
 
 // clear the whole linked list
 func (sll *circularLinkedList) Clear()
+
+/*
+	private helper methods --------------------------------------------------------------------
+*/

@@ -96,3 +96,7 @@ func (sll *doublyLinkedList) PrintList()
 
 // clear the whole linked list
 func (sll *doublyLinkedList) Clear()
+
+/*
+	private helper methods --------------------------------------------------------------------
+*/
