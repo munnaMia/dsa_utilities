@@ -210,21 +210,21 @@ func (sll *singlyLinkedList) Reverse() {
 // // covert the linked list into slice
 // func (sll *singlyLinkedList) ToSlice() []any
 
-// /*
-// 	Metadata & Utility Methods ------------------------------------------------------------
-// */
+/*
+	Metadata & Utility Methods ------------------------------------------------------------
+*/
 
-// // tell how many element the linked list have
-// func (sll *singlyLinkedList) Length() int {
-// 	return sll.length
-// }
+// tell how many element the linked list have
+func (sll *singlyLinkedList) Length() int {
+	return sll.length
+}
 
 // check the linked list is empty or not
 func (sll *singlyLinkedList) IsEmpty() bool {
 	return sll.head == nil
 }
 
-// // Print the single linked list
+// Print the single linked list
 func (sll *singlyLinkedList) PrintList() {
 	if sll.IsEmpty() {
 		fmt.Println("Linked list is empty.")
@@ -239,8 +239,10 @@ func (sll *singlyLinkedList) PrintList() {
 	}
 }
 
-// // clear the whole linked list
-// func (sll *singlyLinkedList) Clear()
+// clear the whole linked list
+func (sll *singlyLinkedList) Clear(){
+	sll.head = nil // unlink all nodes
+}
 
 /*
 	private helper methods --------------------------------------------------------------------
