@@ -208,7 +208,22 @@ func (sll *singlyLinkedList) Reverse() {
 // func (sll *singlyLinkedList) RemoveDuplicates()
 
 // // covert the linked list into slice
-// func (sll *singlyLinkedList) ToSlice() []any
+func (sll *singlyLinkedList) ToSlice() []any {
+	if sll.IsEmpty() {
+		fmt.Println("Linked list is empty.")
+		return []any{}
+	}
+
+	sllSlice := []any{}
+	currentNode := sll.head
+	for currentNode != nil {
+		sllSlice = append(sllSlice, currentNode.data)
+
+		currentNode = currentNode.next
+	}
+
+	return sllSlice
+}
 
 /*
 	Metadata & Utility Methods ------------------------------------------------------------
@@ -240,7 +255,7 @@ func (sll *singlyLinkedList) PrintList() {
 }
 
 // clear the whole linked list
-func (sll *singlyLinkedList) Clear(){
+func (sll *singlyLinkedList) Clear() {
 	sll.head = nil // unlink all nodes
 }
 
