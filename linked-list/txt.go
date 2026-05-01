@@ -2,55 +2,7 @@ package linkedlist
 
 
 
-// // reverse the linked list
-// func (sll *singlyLinkedList) Reverse() {
-// 	tempLinkedList := NewSinglyLinkedList()
 
-// 	currentNode := sll.head
-
-// 	if currentNode == nil {
-// 		fmt.Println("Linked list is empty.")
-// 		return
-// 	}
-
-// 	for currentNode != nil {
-// 		tempLinkedList.InsertAtTail(currentNode.data)
-// 		currentNode = currentNode.next
-// 	}
-
-// 	sll.head = tempLinkedList.head
-// }
-
-// // delete first matched element and return the deleted element
-// func (sll *singlyLinkedList) Delete(data any) (bool, any) {
-// 	previous := sll.head
-// 	current := sll.head.next
-
-// 	if previous == nil {
-// 		fmt.Println("Linked list is empty.")
-// 		return false, 0
-// 	}
-
-// 	// if the head match first
-// 	if previous.data == data {
-// 		sll.head = sll.head.next
-// 		return true, sll.head.data
-// 	}
-
-// 	for current != nil {
-// 		if current.data == data {
-// 			oldData := current.data
-// 			previous.next = current.next // unlink
-
-// 			return true, oldData
-// 		}
-// 		// move the pointer
-// 		previous = current
-// 		current = current.next
-// 	}
-
-// 	return false, 0
-// }
 
 // // delete head node.
 // func (sll *singlyLinkedList) DeleteHead() (bool, any) {

@@ -67,8 +67,36 @@ func (sll *singlyLinkedList) InsertAtTail(data any) {
 // 	Deletation ------------------------------------------------------------
 // */
 
-// // delete first matched element and return the deleted element
-// func (sll *singlyLinkedList) Delete(data any) (bool, any)
+// delete first matched element and return the deleted element. false mean data not exist or list is empty
+func (sll *singlyLinkedList) Delete(data any) (bool, any) {
+	if sll.IsEmpty() {
+		fmt.Println("Linked list is empty.")
+		return false, 0
+	}
+
+	previous := sll.head
+	current := sll.head.next
+
+	// if the head match first
+	if previous.data == data {
+		sll.head = sll.head.next
+		return true, sll.head.data
+	}
+
+	for current != nil {
+		if current.data == data {
+			oldData := current.data
+			previous.next = current.next // unlink the match data
+
+			return true, oldData
+		}
+		// move the pointer
+		previous = current
+		current = current.next
+	}
+
+	return false, 0
+}
 
 // // delete head node.
 // func (sll *singlyLinkedList) DeleteHead() (bool, any)
@@ -160,11 +188,11 @@ func (sll *singlyLinkedList) Reverse() {
 		fmt.Println("Linked list is empty.")
 		return
 	}
-	
+
 	tempLinkedList := NewSinglyLinkedList()
-	
+
 	currentNode := sll.head
-	
+
 	for currentNode != nil {
 		tempLinkedList.InsertAtHead(currentNode.data)
 		currentNode = currentNode.next
