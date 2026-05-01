@@ -132,10 +132,46 @@ func (sll *singlyLinkedList) Search(data any) bool {
 // */
 
 // // Replaces a specific value with a new one.
-// func (sll *singlyLinkedList) Update(data, replace any) (bool, any)
+func (sll *singlyLinkedList) Update(data, replace any) (bool, any) {
+	if sll.IsEmpty() {
+		fmt.Println("Linked list is empty.")
+		return false, 0
+	}
+
+	currentNode := sll.head
+
+	for currentNode != nil {
+		if currentNode.data == data {
+			oldData := currentNode.data
+			currentNode.data = replace // replace with new data.
+
+			return true, oldData
+		}
+
+		currentNode = currentNode.next
+	}
+
+	return false, 0
+}
 
 // // reverse the linked list
-// func (sll *singlyLinkedList) Reverse()
+func (sll *singlyLinkedList) Reverse() {
+	if sll.IsEmpty() {
+		fmt.Println("Linked list is empty.")
+		return
+	}
+	
+	tempLinkedList := NewSinglyLinkedList()
+	
+	currentNode := sll.head
+	
+	for currentNode != nil {
+		tempLinkedList.InsertAtHead(currentNode.data)
+		currentNode = currentNode.next
+	}
+
+	sll.head = tempLinkedList.head
+}
 
 // // sort the linked list
 // func (sll *singlyLinkedList) Sort()
