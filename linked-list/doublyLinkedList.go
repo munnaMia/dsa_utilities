@@ -53,8 +53,8 @@ type doublyLinkedList struct {
 // // show the tail node value
 // func (sll *doublyLinkedList) GetTail() (any, error)
 
-// // get an element of an given index
-// func (sll *doublyLinkedList) GetAt(index int)
+// // get an element of an given index and a bool status that the index exist or not
+// func (sll *doublyLinkedList) GetAt(index int) (bool , any)
 
 // // search an element on linked list and return boolean
 // func (sll *doublyLinkedList) Search(data any) bool

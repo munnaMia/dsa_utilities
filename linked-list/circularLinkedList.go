@@ -53,8 +53,8 @@ type circularLinkedList struct {
 // // show the tail node value
 // func (sll *circularLinkedList) GetTail() (any, error)
 
-// // get an element of an given index
-// func (sll *circularLinkedList) GetAt(index int)
+// // get an element of an given index and a bool status that the index exist or not
+// func (sll *circularLinkedList) GetAt(index int) (bool, any)
 
 // // search an element on linked list and return boolean
 // func (sll *circularLinkedList) Search(data any) bool

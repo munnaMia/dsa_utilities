@@ -130,8 +130,26 @@ func (sll *singlyLinkedList) GetTail() (any, error) {
 	return sll.tail.data, nil
 }
 
-// // get an element of an given index
-// func (sll *singlyLinkedList) GetAt(index int)
+// get an element of an given index and a bool status that the index exist or not
+func (sll *singlyLinkedList) GetAt(index int) (bool, any) {
+	if sll.IsEmpty() {
+		fmt.Println("Linked list is empty.")
+		return false, 0
+	}
+
+	currentNode := sll.head
+	counter := 0
+
+	for currentNode != nil && counter < sll.length {
+		if counter == index {
+			return true, currentNode.data
+		}
+		currentNode = currentNode.next
+		counter++
+	}
+
+	return false, 0
+}
 
 // // search an element on linked list and return boolean
 func (sll *singlyLinkedList) Search(data any) bool {
@@ -155,11 +173,11 @@ func (sll *singlyLinkedList) Search(data any) bool {
 // // Returns a simple true/false if the value is in the list.
 // func (sll *singlyLinkedList) Contains(data any)
 
-// /*
-// 	Transformation Methods ------------------------------------------------------------
-// */
+/*
+	Transformation Methods ------------------------------------------------------------
+*/
 
-// // Replaces a specific value with a new one.
+// Replaces a specific value with a new one.
 func (sll *singlyLinkedList) Update(data, replace any) (bool, any) {
 	if sll.IsEmpty() {
 		fmt.Println("Linked list is empty.")
@@ -182,7 +200,7 @@ func (sll *singlyLinkedList) Update(data, replace any) (bool, any) {
 	return false, 0
 }
 
-// // reverse the linked list
+// reverse the linked list
 func (sll *singlyLinkedList) Reverse() {
 	if sll.IsEmpty() {
 		fmt.Println("Linked list is empty.")
@@ -201,13 +219,13 @@ func (sll *singlyLinkedList) Reverse() {
 	sll.head = tempLinkedList.head
 }
 
-// // sort the linked list
+// sort the linked list
 // func (sll *singlyLinkedList) Sort()
 
-// // Scans the list and removes nodes with repeating values
+// Scans the list and removes nodes with repeating values
 // func (sll *singlyLinkedList) RemoveDuplicates()
 
-// // covert the linked list into slice
+// covert the linked list into slice
 func (sll *singlyLinkedList) ToSlice() []any {
 	if sll.IsEmpty() {
 		fmt.Println("Linked list is empty.")
