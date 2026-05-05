@@ -1,9 +1,18 @@
 package linkedlist
 
 type circularLinkedList struct {
+	head   *Node
+	tail   *Node
+	length int
 }
 
-// func NewCircularLinkedList() *circularLinkedList
+func NewCircularLinkedList() *circularLinkedList {
+	return &circularLinkedList{
+		head:   nil,
+		tail:   nil,
+		length: 0,
+	}
+}
 
 // /*
 // 	Insertion ------------------------------------------------------------
