@@ -1,5 +1,7 @@
 package linkedlist
 
+import "container/heap"
+
 type circularLinkedList struct {
 	head   *Node
 	tail   *Node
@@ -19,92 +21,94 @@ func NewCircularLinkedList() *circularLinkedList {
 // */
 
 // // append element on the end on singly linked list
-// func (sll *circularLinkedList) InsertAtHead(data any)
+// func (cll *circularLinkedList) InsertAtHead(data any)
 
 // // push element on the beginning
-// func (sll *circularLinkedList) InsertAtTail(data any)
+// func (cll *circularLinkedList) InsertAtTail(data any)
 
 // // Adds a node at a specific position.
-// func (sll *circularLinkedList) InsertAt(index int, data any) error
+// func (cll *circularLinkedList) InsertAt(index int, data any) error
 
 // // Inserts new data right after a specific existing value.
-// func (sll *circularLinkedList) InsertAfter(targetData any, newData any) error
+// func (cll *circularLinkedList) InsertAfter(targetData any, newData any) error
 
 // // Inserts new data right after a specific existing value.
-// func (sll *circularLinkedList) InsertBefore(targetData any, newData any) error
+// func (cll *circularLinkedList) InsertBefore(targetData any, newData any) error
 
 // /*
 // 	Deletation ------------------------------------------------------------
 // */
 
 // // delete first matched element and return the deleted element
-// func (sll *circularLinkedList) Delete(data any) (bool, any)
+// func (cll *circularLinkedList) Delete(data any) (bool, any)
 
 // // delete head node.
-// func (sll *circularLinkedList) DeleteHead() (bool, any)
+// func (cll *circularLinkedList) DeleteHead() (bool, any)
 
 // // delete tail node.
-// func (sll *circularLinkedList) DeleteTail() (bool, any)
+// func (cll *circularLinkedList) DeleteTail() (bool, any)
 
 // // Removes a node based on its numerical position.
-// func (sll *circularLinkedList) DeleteAt(index int)
+// func (cll *circularLinkedList) DeleteAt(index int)
 
 // // Keeps the first $n$ elements and deletes the rest.
-// func (sll *circularLinkedList) Truncate(n int)
+// func (cll *circularLinkedList) Truncate(n int)
 
 // /*
 // 	Access & Search Methods ------------------------------------------------------------
 // */
 
 // // show the head node value
-// func (sll *circularLinkedList) GetHead() (any, error)
+// func (cll *circularLinkedList) GetHead() (any, error)
 
 // // show the tail node value
-// func (sll *circularLinkedList) GetTail() (any, error)
+// func (cll *circularLinkedList) GetTail() (any, error)
 
 // // get an element of an given index and a bool status that the index exist or not
-// func (sll *circularLinkedList) GetAt(index int) (bool, any)
+// func (cll *circularLinkedList) GetAt(index int) (bool, any)
 
 // // search an element on linked list and return boolean
-// func (sll *circularLinkedList) Search(data any) bool
+// func (cll *circularLinkedList) Search(data any) bool
 
 // // Returns a simple true/false if the value is in the list.
-// func (sll *circularLinkedList) Contains(data any) bool
+// func (cll *circularLinkedList) Contains(data any) bool
 
 // /*
 // 	Transformation Methods ------------------------------------------------------------
 // */
 
 // // Replaces a specific value with a new one.
-// func (sll *circularLinkedList) Update(data, replace any) (bool, any)
+// func (cll *circularLinkedList) Update(data, replace any) (bool, any)
 
 // // reverse the linked list
-// func (sll *circularLinkedList) Reverse()
+// func (cll *circularLinkedList) Reverse()
 
 // // sort the linked list
-// func (sll *circularLinkedList) Sort()
+// func (cll *circularLinkedList) Sort()
 
 // // Scans the list and removes nodes with repeating values
-// func (sll *circularLinkedList) RemoveDuplicates()
+// func (cll *circularLinkedList) RemoveDuplicates()
 
 // // covert the linked list into slice
-// func (sll *circularLinkedList) ToSlice() []any
+// func (cll *circularLinkedList) ToSlice() []any
 
 // /*
 // 	Metadata & Utility Methods ------------------------------------------------------------
 // */
 
 // // tell how many element the linked list have
-// func (sll *circularLinkedList) Length() int
+// func (cll *circularLinkedList) Length() int
 
-// // check the linked list is empty or not
-// func (sll *circularLinkedList) IsEmpty() bool
+// check the linked list is empty or not
+func (cll *circularLinkedList) IsEmpty() bool {
+	return cll.head == nil
+}
 
 // // Print the single linked list
-// func (sll *circularLinkedList) PrintList()
+// func (cll *circularLinkedList) PrintList()
 
 // // clear the whole linked list
-// func (sll *circularLinkedList) Clear()
+// func (cll *circularLinkedList) Clear()
 
 // /*
 // 	private helper methods --------------------------------------------------------------------
