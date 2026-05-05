@@ -1,7 +1,5 @@
 package linkedlist
 
-import "container/heap"
-
 type circularLinkedList struct {
 	head   *Node
 	tail   *Node
@@ -96,8 +94,10 @@ func NewCircularLinkedList() *circularLinkedList {
 // 	Metadata & Utility Methods ------------------------------------------------------------
 // */
 
-// // tell how many element the linked list have
-// func (cll *circularLinkedList) Length() int
+// tell how many element the linked list have
+func (cll *circularLinkedList) Length() int {
+	return cll.length
+}
 
 // check the linked list is empty or not
 func (cll *circularLinkedList) IsEmpty() bool {

@@ -94,8 +94,10 @@ func NewDoublyLinkedList() *doublyLinkedList {
 // 	Metadata & Utility Methods ------------------------------------------------------------
 // */
 
-// // tell how many element the linked list have
-// func (dll *doublyLinkedList) Length() int
+// tell how many element the linked list have
+func (dll *doublyLinkedList) Length() int {
+	return dll.length
+}
 
 // check the linked list is empty or not
 func (dll *doublyLinkedList) IsEmpty() bool {
