@@ -1,2 +1,4 @@
 index.php
 main.go
+.venv/
+venv/
