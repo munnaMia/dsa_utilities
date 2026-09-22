@@ -1,5 +1,6 @@
 package math
 
+// return bool if a number is a prime or not
 func IsPrime(n int) bool {
 	if n == 2 {
 		return true
