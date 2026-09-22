@@ -464,18 +464,6 @@ func (dll *DoublyLinkedList) Reverse() {
 		return
 	}
 
-	// newTempLL := NewDoublyLinkedList()
-
-	// current := dll.head
-
-	// for current != nil {
-	// 	newTempLL.InsertAtHead(current.data)
-	// 	current = current.next
-	// }
-
-	// dll.head = newTempLL.head
-	// dll.tail = newTempLL.tail
-
 	current := dll.head
 
 	for current != nil {
