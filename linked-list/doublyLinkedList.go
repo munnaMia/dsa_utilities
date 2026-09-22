@@ -39,9 +39,7 @@ func (dll *DoublyLinkedList) InsertAtHead(data any) {
 		return
 	}
 
-	// previous head node prev pointer set to new node
 	dll.head.prev = newNode
-
 	dll.head = newNode
 }
 
@@ -445,21 +443,18 @@ func (dll *DoublyLinkedList) Contains(data any) bool {
 // */
 
 // Replaces a specific value with a new one.
-func (dll *DoublyLinkedList) Update(data, replace any) (*Node, error) {
+func (dll *DoublyLinkedList) Update(data, replace any) error {
 	if dll.IsEmpty() {
-		return nil, fmt.Errorf("Linked list is empty.")
+		return fmt.Errorf("Linked list is empty.")
 	}
 
 	targetNode, err := dll.Search(data)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	oldData := targetNode
-
 	targetNode.data = replace
-
-	return oldData, nil
+	return nil
 }
 
 // reverse the linked list
@@ -469,17 +464,31 @@ func (dll *DoublyLinkedList) Reverse() {
 		return
 	}
 
-	newTempLL := NewDoublyLinkedList()
+	// newTempLL := NewDoublyLinkedList()
+
+	// current := dll.head
+
+	// for current != nil {
+	// 	newTempLL.InsertAtHead(current.data)
+	// 	current = current.next
+	// }
+
+	// dll.head = newTempLL.head
+	// dll.tail = newTempLL.tail
 
 	current := dll.head
 
 	for current != nil {
-		newTempLL.InsertAtHead(current.data)
-		current = current.next
-	}
+		temp := current.prev
+		current.prev = current.next
+		current.next = temp
 
-	dll.head = newTempLL.head
-	dll.tail = newTempLL.tail
+		current = current.prev
+	}
+	temp := dll.head
+
+	dll.head = dll.tail
+	dll.tail = temp
 }
 
 // Scans the list and removes nodes with repeating values
