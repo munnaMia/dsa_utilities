@@ -18,3 +18,17 @@ func IsPrime(n int) bool {
 	return true
 
 }
+
+func PrimeQuery(l, h int) int {
+	arr := SeiveOfEratosthenes(1000000) // 10^6
+	count := 0
+	for l <= h {
+		if arr[l] == 1 {
+			count++
+		}
+
+		l++
+	}
+
+	return count
+}

@@ -120,10 +120,26 @@ func PrimeFactor(n int) (result []int) {
 func PrimeFactor1(n int) (result []int) {
 	for i := 2; i*i < n; i++ {
 		if n%i == 0 {
-			if IsPrime(i) {
-				result = append(result, i)
-			}
+			result = append(result, i)
 			for n%i == 0 {
+				n /= i
+			}
+		}
+	}
+
+	if n != 1 {
+		result = append(result, n)
+	}
+	return
+}
+
+func PrimeFactorization(n int) (result []int) {
+	spf := SmallestPrimeFactor(100000)
+
+	for i := spf[n]; i*i < n; i++ {
+		if n%i == 0 {
+			for n%i == 0 {
+				result = append(result, i)
 				n /= i
 			}
 		}
