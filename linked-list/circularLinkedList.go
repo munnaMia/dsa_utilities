@@ -25,17 +25,17 @@ func (cll *CircularLinkedList) InsertAtHead(data any) {
 	defer cll.incrementCounter()
 
 	newNode := &Node{
-		prev: cll.tail,
-		data: data,
-		next: cll.head,
+		Prev: cll.tail,
+		Data: data,
+		Next: cll.head,
 	}
 
 	if cll.IsEmpty() {
 		cll.head = newNode
 		cll.tail = newNode
 	}
-	cll.tail.next = newNode
-	cll.head.prev = newNode
+	cll.tail.Next = newNode
+	cll.head.Prev = newNode
 	cll.head = newNode
 }
 
@@ -44,9 +44,9 @@ func (cll *CircularLinkedList) InsertAtTail(data any) {
 	defer cll.incrementCounter()
 
 	newNode := &Node{
-		prev: cll.tail,
-		data: data,
-		next: cll.head,
+		Prev: cll.tail,
+		Data: data,
+		Next: cll.head,
 	}
 
 	if cll.IsEmpty() {
@@ -54,8 +54,8 @@ func (cll *CircularLinkedList) InsertAtTail(data any) {
 		cll.tail = newNode
 	}
 
-	cll.tail.next = newNode
-	cll.head.prev = newNode
+	cll.tail.Next = newNode
+	cll.head.Prev = newNode
 	cll.tail = newNode
 }
 
@@ -73,12 +73,12 @@ func (cll *CircularLinkedList) InsertAt(index int, data any) {
 
 	if index == 0 {
 		newNode := &Node{
-			prev: cll.tail,
-			data: data,
-			next: cll.head,
+			Prev: cll.tail,
+			Data: data,
+			Next: cll.head,
 		}
-		cll.head.prev = newNode
-		cll.tail.next = newNode
+		cll.head.Prev = newNode
+		cll.tail.Next = newNode
 		cll.head = newNode
 
 		cll.incrementCounter()
@@ -87,22 +87,22 @@ func (cll *CircularLinkedList) InsertAt(index int, data any) {
 
 	counter := 1
 
-	current := cll.head.next // start from index 1
+	current := cll.head.Next // start from index 1
 
 	for {
 		if counter == index {
 			newNode := &Node{
-				prev: current.prev,
-				data: data,
-				next: current,
+				Prev: current.Prev,
+				Data: data,
+				Next: current,
 			}
-			current.prev.next = newNode
-			current.prev = newNode
+			current.Prev.Next = newNode
+			current.Prev = newNode
 			cll.incrementCounter()
 			return
 		}
 
-		current = current.next
+		current = current.Next
 		counter++
 
 		if current == cll.head {
@@ -111,12 +111,12 @@ func (cll *CircularLinkedList) InsertAt(index int, data any) {
 	}
 
 	for counter <= index {
-		cll.tail.next = &Node{}
-		cll.tail = cll.tail.next
+		cll.tail.Next = &Node{}
+		cll.tail = cll.tail.Next
 		cll.incrementCounter()
 
 		if counter == index {
-			cll.tail.data = data
+			cll.tail.Data = data
 			return
 		}
 		counter++
@@ -144,13 +144,13 @@ func (cll *CircularLinkedList) InsertAfter(targetData any, data any) {
 	}
 
 	newNode := &Node{
-		prev: targetNode,
-		data: data,
-		next: targetNode.next,
+		Prev: targetNode,
+		Data: data,
+		Next: targetNode.Next,
 	}
 
-	targetNode.next.prev = newNode
-	targetNode.next = newNode
+	targetNode.Next.Prev = newNode
+	targetNode.Next = newNode
 
 	cll.incrementCounter()
 }
@@ -176,13 +176,13 @@ func (cll *CircularLinkedList) InsertBefore(targetData any, data any) {
 	}
 
 	newNode := &Node{
-		prev: targetNode.prev,
-		data: data,
-		next: targetNode,
+		Prev: targetNode.Prev,
+		Data: data,
+		Next: targetNode,
 	}
 
-	targetNode.prev.next = newNode
-	targetNode.prev = newNode
+	targetNode.Prev.Next = newNode
+	targetNode.Prev = newNode
 	cll.incrementCounter()
 }
 
@@ -200,8 +200,8 @@ func (cll *CircularLinkedList) Delete(data any) (bool, any) {
 	targetNode, _ := cll.Search(data)
 
 	if cll.length == 1 {
-		if targetNode.data == cll.head.data {
-			oldData := cll.head.data
+		if targetNode.Data == cll.head.Data {
+			oldData := cll.head.Data
 			cll.head = nil
 			cll.tail = nil
 
@@ -211,30 +211,30 @@ func (cll *CircularLinkedList) Delete(data any) (bool, any) {
 	}
 
 	if cll.head == targetNode {
-		oldData := cll.head.data
-		cll.head = cll.head.next
-		cll.tail.next = cll.head
+		oldData := cll.head.Data
+		cll.head = cll.head.Next
+		cll.tail.Next = cll.head
 
 		cll.decrementCounter()
 		return true, oldData
 	}
 
 	if cll.tail == targetNode {
-		oldData := cll.tail.data
-		cll.tail = cll.tail.prev
-		cll.tail.next = cll.head
-		cll.head.prev = cll.tail
+		oldData := cll.tail.Data
+		cll.tail = cll.tail.Prev
+		cll.tail.Next = cll.head
+		cll.head.Prev = cll.tail
 
 		cll.decrementCounter()
 		return true, oldData
 	}
 
-	oldData := targetNode.data
-	preNode := targetNode.prev
-	postNode := targetNode.next
+	oldData := targetNode.Data
+	preNode := targetNode.Prev
+	postNode := targetNode.Next
 
-	preNode.next = postNode
-	postNode.prev = preNode
+	preNode.Next = postNode
+	postNode.Prev = preNode
 	cll.decrementCounter()
 	return true, oldData
 }
@@ -245,7 +245,7 @@ func (cll *CircularLinkedList) DeleteHead() (bool, any) {
 		fmt.Println("Linked list is empty.")
 		return false, 0
 	}
-	oldData := cll.head.data
+	oldData := cll.head.Data
 
 	if cll.length == 1 {
 		cll.head = nil
@@ -254,9 +254,9 @@ func (cll *CircularLinkedList) DeleteHead() (bool, any) {
 		return true, oldData
 	}
 
-	cll.head = cll.head.next
-	cll.head.prev = cll.tail
-	cll.tail.next = cll.head
+	cll.head = cll.head.Next
+	cll.head.Prev = cll.tail
+	cll.tail.Next = cll.head
 	cll.decrementCounter()
 	return true, oldData
 }
@@ -267,7 +267,7 @@ func (cll *CircularLinkedList) DeleteTail() (bool, any) {
 		fmt.Println("Linked list is empty.")
 		return false, 0
 	}
-	oldData := cll.tail.data
+	oldData := cll.tail.Data
 
 	if cll.length == 1 {
 		cll.head = nil
@@ -276,9 +276,9 @@ func (cll *CircularLinkedList) DeleteTail() (bool, any) {
 		return true, oldData
 	}
 
-	cll.tail = cll.tail.prev
-	cll.tail.next = cll.head
-	cll.head.prev = cll.tail
+	cll.tail = cll.tail.Prev
+	cll.tail.Next = cll.head
+	cll.head.Prev = cll.tail
 	cll.decrementCounter()
 
 	return true, oldData
@@ -302,7 +302,7 @@ func (cll *CircularLinkedList) DeleteAt(index int) (bool, any) {
 
 	if cll.length == 1 {
 		if counter == index {
-			oldData := cll.head.data
+			oldData := cll.head.Data
 			cll.head = nil
 			cll.tail = nil
 			cll.decrementCounter()
@@ -320,17 +320,17 @@ func (cll *CircularLinkedList) DeleteAt(index int) (bool, any) {
 
 	for counter <= index {
 		if counter == index {
-			oldData := current.data
-			preNode := current.prev
-			postNode := current.next
+			oldData := current.Data
+			preNode := current.Prev
+			postNode := current.Next
 
-			preNode.next = postNode
-			postNode.prev = preNode
+			preNode.Next = postNode
+			postNode.Prev = preNode
 			cll.decrementCounter()
 			return true, oldData
 		}
 		counter++
-		current = current.next
+		current = current.Next
 	}
 
 	return false, nil
@@ -352,8 +352,8 @@ func (cll *CircularLinkedList) Truncate(n int) error {
 	}
 
 	cll.tail = currentNode
-	cll.tail.next = cll.head
-	cll.head.prev = cll.tail
+	cll.tail.Next = cll.head
+	cll.head.Prev = cll.tail
 
 	return nil
 }
@@ -383,7 +383,7 @@ func (cll *CircularLinkedList) GetHeadData() (any, error) {
 	if cll.IsEmpty() {
 		return nil, fmt.Errorf("Linked list is empty.")
 	}
-	return cll.head.data, nil
+	return cll.head.Data, nil
 }
 
 // show the tail node value
@@ -391,7 +391,7 @@ func (cll *CircularLinkedList) GetTailData() (any, error) {
 	if cll.IsEmpty() {
 		return nil, fmt.Errorf("Linked list is empty.")
 	}
-	return cll.tail.data, nil
+	return cll.tail.Data, nil
 }
 
 // get an element of an given index and a bool status that the index exist or not
@@ -408,7 +408,7 @@ func (cll *CircularLinkedList) GetAt(index int) (*Node, error) {
 		if counter == index {
 			return currentNode, nil
 		}
-		currentNode = currentNode.next
+		currentNode = currentNode.Next
 		counter++
 
 		if currentNode == cll.head {
@@ -428,10 +428,10 @@ func (cll *CircularLinkedList) Search(data any) (*Node, error) {
 	currentNode := cll.head
 
 	for {
-		if currentNode.data == data {
+		if currentNode.Data == data {
 			return currentNode, nil
 		}
-		currentNode = currentNode.next
+		currentNode = currentNode.Next
 
 		if currentNode == cll.head {
 			break
@@ -466,7 +466,7 @@ func (cll *CircularLinkedList) Update(data, replace any) (*Node, error) {
 
 	oldData := targetNode
 
-	targetNode.data = replace
+	targetNode.Data = replace
 
 	return oldData, nil
 }
@@ -483,8 +483,8 @@ func (cll *CircularLinkedList) Reverse() {
 	current := cll.head
 
 	for {
-		tempCll.InsertAtHead(current.data)
-		current = current.next
+		tempCll.InsertAtHead(current.Data)
+		current = current.Next
 
 		if current == cll.head {
 			break
@@ -505,20 +505,20 @@ func (cll *CircularLinkedList) RemoveDuplicates() {
 	seen := make(map[any]bool)
 
 	current := cll.head
-	seen[current.data] = true
+	seen[current.Data] = true
 
 	for {
-		if seen[current.next.data] {
-			if current.next == cll.head {
-				cll.head = cll.head.next
+		if seen[current.Next.Data] {
+			if current.Next == cll.head {
+				cll.head = cll.head.Next
 			}
-			current.next = current.next.next
+			current.Next = current.Next.Next
 		} else {
-			seen[current.next.data] = true
-			current = current.next
+			seen[current.Next.Data] = true
+			current = current.Next
 		}
 
-		if current.next == cll.head {
+		if current.Next == cll.head {
 			break
 		}
 
@@ -536,8 +536,8 @@ func (cll *CircularLinkedList) ToSlice() []any {
 	slc := make([]any, 0)
 
 	for {
-		slc = append(slc, current.data)
-		current = current.next
+		slc = append(slc, current.Data)
+		current = current.Next
 
 		if current == cll.head {
 			break
@@ -571,8 +571,8 @@ func (cll *CircularLinkedList) PrintList() {
 	current := cll.head
 
 	for {
-		fmt.Println("Data :", current.data)
-		current = current.next
+		fmt.Println("Data :", current.Data)
+		current = current.Next
 
 		if current == cll.head {
 			break

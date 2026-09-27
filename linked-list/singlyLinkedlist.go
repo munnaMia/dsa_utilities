@@ -27,8 +27,8 @@ func (sll *SinglyLinkedList) InsertAtHead(data any) {
 	defer sll.incrementCounter()
 
 	newNode := &Node{
-		data: data,
-		next: sll.head,
+		Data: data,
+		Next: sll.head,
 	}
 
 	sll.head = newNode
@@ -42,8 +42,8 @@ func (sll *SinglyLinkedList) InsertAtTail(data any) {
 	defer sll.incrementCounter()
 
 	newNode := &Node{
-		data: data,
-		next: nil,
+		Data: data,
+		Next: nil,
 	}
 
 	if sll.IsEmpty() {
@@ -52,7 +52,7 @@ func (sll *SinglyLinkedList) InsertAtTail(data any) {
 		return
 	}
 
-	sll.tail.next = newNode
+	sll.tail.Next = newNode
 	sll.tail = newNode
 }
 
@@ -75,7 +75,7 @@ func (sll *SinglyLinkedList) InsertAt(index int, data any) {
 	}
 
 	previous := sll.head
-	current := sll.head.next
+	current := sll.head.Next
 
 	counter := 1 // as first index already check and current point start with the secound element
 
@@ -83,16 +83,16 @@ func (sll *SinglyLinkedList) InsertAt(index int, data any) {
 
 		if counter == index {
 			newNode := &Node{
-				data: data,
-				next: current,
+				Data: data,
+				Next: current,
 			}
-			previous.next = newNode
+			previous.Next = newNode
 			sll.incrementCounter()
 			return
 		}
 
 		previous = current
-		current = current.next
+		current = current.Next
 		counter++
 	}
 }
@@ -115,10 +115,10 @@ func (sll *SinglyLinkedList) InsertAfter(targetData any, data any) {
 		return
 	}
 
-	tempNode := targetNode.next
-	targetNode.next = &Node{
-		data: data,
-		next: tempNode,
+	tempNode := targetNode.Next
+	targetNode.Next = &Node{
+		Data: data,
+		Next: tempNode,
 	}
 	sll.incrementCounter()
 }
@@ -131,19 +131,19 @@ func (sll *SinglyLinkedList) InsertBefore(targetData any, data any) {
 	}
 
 	previous := sll.head
-	current := sll.head.next
+	current := sll.head.Next
 
 	// if the head match first
-	if previous.data == targetData {
+	if previous.Data == targetData {
 		sll.InsertAtHead(targetData)
 		return
 	}
 
 	for current != nil {
-		if current.data == targetData {
-			previous.next = &Node{
-				data: data,
-				next: current,
+		if current.Data == targetData {
+			previous.Next = &Node{
+				Data: data,
+				Next: current,
 			}
 			sll.incrementCounter()
 			return
@@ -151,7 +151,7 @@ func (sll *SinglyLinkedList) InsertBefore(targetData any, data any) {
 
 		// move the pointer
 		previous = current
-		current = current.next
+		current = current.Next
 	}
 
 	fmt.Println("targeted node not found")
@@ -169,26 +169,26 @@ func (sll *SinglyLinkedList) Delete(data any) (bool, any) {
 	}
 
 	previous := sll.head
-	current := sll.head.next
+	current := sll.head.Next
 
 	// if the head match first
-	if previous.data == data {
-		temp := sll.head.data
-		sll.head = sll.head.next
+	if previous.Data == data {
+		temp := sll.head.Data
+		sll.head = sll.head.Next
 		sll.decrementCounter()
 		return true, temp
 	}
 
 	for current != nil {
-		if current.data == data {
-			temp := current.data
-			previous.next = current.next
+		if current.Data == data {
+			temp := current.Data
+			previous.Next = current.Next
 			sll.decrementCounter()
 			return true, temp
 		}
 		// move the pointer
 		previous = current
-		current = current.next
+		current = current.Next
 	}
 
 	return false, nil
@@ -201,8 +201,8 @@ func (sll *SinglyLinkedList) DeleteHead() (bool, any) {
 		return false, nil
 	}
 
-	temp := sll.head.data
-	sll.head = sll.head.next
+	temp := sll.head.Data
+	sll.head = sll.head.Next
 	sll.decrementCounter()
 	return true, temp
 }
@@ -214,7 +214,7 @@ func (sll *SinglyLinkedList) DeleteTail() (bool, any) {
 		return false, nil
 	}
 
-	temp := sll.tail.data
+	temp := sll.tail.Data
 
 	// if only one node available
 	if sll.Length() == 1 {
@@ -226,15 +226,15 @@ func (sll *SinglyLinkedList) DeleteTail() (bool, any) {
 
 	current := sll.head
 
-	for current.next != nil {
-		if current.next == sll.tail {
-			current.next = nil
+	for current.Next != nil {
+		if current.Next == sll.tail {
+			current.Next = nil
 			sll.tail = current
 			sll.decrementCounter()
 			return true, temp
 		}
 
-		current = current.next
+		current = current.Next
 	}
 
 	return false, nil
@@ -252,13 +252,13 @@ func (sll *SinglyLinkedList) DeleteAt(index int) (bool, any) {
 	}
 
 	previous := sll.head
-	current := sll.head.next
+	current := sll.head.Next
 	currentIdx := 1
 
 	for current != nil {
 		if currentIdx == index {
-			temp := current.data
-			previous.next = current.next
+			temp := current.Data
+			previous.Next = current.Next
 			sll.decrementCounter()
 			return true, temp
 		}
@@ -266,7 +266,7 @@ func (sll *SinglyLinkedList) DeleteAt(index int) (bool, any) {
 		currentIdx++
 
 		previous = current
-		current = current.next
+		current = current.Next
 	}
 
 	return false, nil
@@ -287,7 +287,7 @@ func (sll *SinglyLinkedList) Truncate(n int) error {
 		return err
 	}
 
-	currentNode.next = nil
+	currentNode.Next = nil
 	sll.tail = currentNode
 
 	return nil
@@ -310,7 +310,7 @@ func (sll *SinglyLinkedList) GetHeadData() (any, error) {
 	if sll.IsEmpty() {
 		return nil, fmt.Errorf("Linked list is empty.")
 	}
-	return sll.head.data, nil
+	return sll.head.Data, nil
 }
 
 // show the tail node
@@ -326,7 +326,7 @@ func (sll *SinglyLinkedList) GetTailData() (any, error) {
 	if sll.IsEmpty() {
 		return nil, fmt.Errorf("Linked list is empty.")
 	}
-	return sll.tail.data, nil
+	return sll.tail.Data, nil
 }
 
 // get an node by index
@@ -342,7 +342,7 @@ func (sll *SinglyLinkedList) GetAt(index int) (*Node, error) {
 		if counter == index {
 			return currentNode, nil
 		}
-		currentNode = currentNode.next
+		currentNode = currentNode.Next
 		counter++
 	}
 
@@ -358,10 +358,10 @@ func (sll *SinglyLinkedList) Search(data any) (*Node, error) {
 	currentNode := sll.head
 
 	for currentNode != nil {
-		if currentNode.data == data {
+		if currentNode.Data == data {
 			return currentNode, nil
 		}
-		currentNode = currentNode.next
+		currentNode = currentNode.Next
 	}
 
 	return nil, fmt.Errorf("element not found")
@@ -391,7 +391,7 @@ func (sll *SinglyLinkedList) Update(data, replace any) error {
 		return err
 	}
 
-	targetNode.data = replace
+	targetNode.Data = replace
 
 	return nil
 }
@@ -408,8 +408,8 @@ func (sll *SinglyLinkedList) Reverse() {
 	currentNode := sll.head
 
 	for currentNode != nil {
-		tempLinkedList.InsertAtHead(currentNode.data)
-		currentNode = currentNode.next
+		tempLinkedList.InsertAtHead(currentNode.Data)
+		currentNode = currentNode.Next
 	}
 
 	sll.head = tempLinkedList.head
@@ -426,14 +426,14 @@ func (sll *SinglyLinkedList) RemoveDuplicates() {
 	seen := make(map[any]bool)
 
 	current := sll.head
-	seen[current.data] = true
+	seen[current.Data] = true
 
-	for current.next != nil {
-		if seen[current.next.data] {
-			current.next = current.next.next
+	for current.Next != nil {
+		if seen[current.Next.Data] {
+			current.Next = current.Next.Next
 		} else {
-			seen[current.next.data] = true
-			current = current.next
+			seen[current.Next.Data] = true
+			current = current.Next
 
 		}
 
@@ -450,9 +450,9 @@ func (sll *SinglyLinkedList) ToSlice() []any {
 	sllSlice := []any{}
 	currentNode := sll.head
 	for currentNode != nil {
-		sllSlice = append(sllSlice, currentNode.data)
+		sllSlice = append(sllSlice, currentNode.Data)
 
-		currentNode = currentNode.next
+		currentNode = currentNode.Next
 	}
 
 	return sllSlice
@@ -493,8 +493,8 @@ func (sll *SinglyLinkedList) PrintList() {
 	currentNode := sll.head
 
 	for currentNode != nil {
-		fmt.Println("Data :", currentNode.data)
-		currentNode = currentNode.next
+		fmt.Println("Data :", currentNode.Data)
+		currentNode = currentNode.Next
 	}
 }
 

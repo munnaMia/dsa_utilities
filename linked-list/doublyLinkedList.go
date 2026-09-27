@@ -28,9 +28,9 @@ func (dll *DoublyLinkedList) InsertAtHead(data any) {
 
 	// create a new node
 	newNode := &Node{
-		prev: nil,
-		data: data,
-		next: dll.head,
+		Prev: nil,
+		Data: data,
+		Next: dll.head,
 	}
 
 	if dll.IsEmpty() {
@@ -39,7 +39,7 @@ func (dll *DoublyLinkedList) InsertAtHead(data any) {
 		return
 	}
 
-	dll.head.prev = newNode
+	dll.head.Prev = newNode
 	dll.head = newNode
 }
 
@@ -49,21 +49,21 @@ func (dll *DoublyLinkedList) InsertAtTail(data any) {
 
 	if dll.IsEmpty() {
 		dll.head = &Node{
-			prev: nil,
-			data: data,
-			next: nil,
+			Prev: nil,
+			Data: data,
+			Next: nil,
 		}
 		dll.tail = dll.head
 		return
 	}
 
-	dll.tail.next = &Node{
-		prev: dll.tail,
-		data: data,
-		next: nil,
+	dll.tail.Next = &Node{
+		Prev: dll.tail,
+		Data: data,
+		Next: nil,
 	}
 
-	dll.tail = dll.tail.next
+	dll.tail = dll.tail.Next
 }
 
 // Adds a node at a specific position.
@@ -79,11 +79,11 @@ func (dll *DoublyLinkedList) InsertAt(index int, data any) {
 
 	if index == 0 {
 		newNode := &Node{
-			prev: nil,
-			data: data,
-			next: dll.head,
+			Prev: nil,
+			Data: data,
+			Next: dll.head,
 		}
-		dll.head.prev = newNode
+		dll.head.Prev = newNode
 		dll.head = newNode
 		dll.incrementCounter()
 		return
@@ -91,32 +91,32 @@ func (dll *DoublyLinkedList) InsertAt(index int, data any) {
 
 	counter := 1
 
-	current := dll.head.next // start from index 1
+	current := dll.head.Next // start from index 1
 
 	for current != nil {
 		if counter == index {
 			newNode := &Node{
-				prev: current.prev,
-				data: data,
-				next: current,
+				Prev: current.Prev,
+				Data: data,
+				Next: current,
 			}
-			current.prev.next = newNode
-			current.prev = newNode
+			current.Prev.Next = newNode
+			current.Prev = newNode
 			dll.incrementCounter()
 			return
 		}
 
-		current = current.next
+		current = current.Next
 		counter++
 	}
 
 	for counter <= index {
-		dll.tail.next = &Node{}
-		dll.tail = dll.tail.next
+		dll.tail.Next = &Node{}
+		dll.tail = dll.tail.Next
 		dll.incrementCounter()
 
 		if counter == index {
-			dll.tail.data = data
+			dll.tail.Data = data
 			return
 		}
 		counter++
@@ -144,13 +144,13 @@ func (dll *DoublyLinkedList) InsertAfter(targetData any, data any) {
 	}
 
 	newNode := &Node{
-		prev: targetNode,
-		data: data,
-		next: targetNode.next,
+		Prev: targetNode,
+		Data: data,
+		Next: targetNode.Next,
 	}
 
-	targetNode.next.prev = newNode
-	targetNode.next = newNode
+	targetNode.Next.Prev = newNode
+	targetNode.Next = newNode
 
 	dll.incrementCounter()
 }
@@ -176,13 +176,13 @@ func (dll *DoublyLinkedList) InsertBefore(targetData any, data any) {
 	}
 
 	newNode := &Node{
-		prev: targetNode.prev,
-		data: data,
-		next: targetNode,
+		Prev: targetNode.Prev,
+		Data: data,
+		Next: targetNode,
 	}
 
-	targetNode.prev.next = newNode
-	targetNode.prev = newNode
+	targetNode.Prev.Next = newNode
+	targetNode.Prev = newNode
 	dll.incrementCounter()
 }
 
@@ -199,8 +199,8 @@ func (dll *DoublyLinkedList) Delete(data any) (bool, any) {
 	targetNode, _ := dll.Search(data)
 
 	if dll.length == 1 {
-		if targetNode.data == dll.head.data {
-			oldData := dll.head.data
+		if targetNode.Data == dll.head.Data {
+			oldData := dll.head.Data
 			dll.head = nil
 			dll.tail = nil
 			dll.decrementCounter()
@@ -209,27 +209,27 @@ func (dll *DoublyLinkedList) Delete(data any) (bool, any) {
 	}
 
 	if dll.head == targetNode {
-		oldData := dll.head.data
-		dll.head = dll.head.next
-		dll.head.prev = nil
+		oldData := dll.head.Data
+		dll.head = dll.head.Next
+		dll.head.Prev = nil
 		dll.decrementCounter()
 		return true, oldData
 	}
 
 	if dll.tail == targetNode {
-		oldData := dll.tail.data
-		dll.tail = dll.tail.prev
-		dll.tail.next = nil
+		oldData := dll.tail.Data
+		dll.tail = dll.tail.Prev
+		dll.tail.Next = nil
 		dll.decrementCounter()
 		return true, oldData
 	}
 
-	oldData := targetNode.data
-	preNode := targetNode.prev
-	postNode := targetNode.next
+	oldData := targetNode.Data
+	preNode := targetNode.Prev
+	postNode := targetNode.Next
 
-	preNode.next = postNode
-	postNode.prev = preNode
+	preNode.Next = postNode
+	postNode.Prev = preNode
 	dll.decrementCounter()
 	return true, oldData
 }
@@ -240,7 +240,7 @@ func (dll *DoublyLinkedList) DeleteHead() (bool, any) {
 		fmt.Println("Linked list is empty.")
 		return false, 0
 	}
-	oldData := dll.head.data
+	oldData := dll.head.Data
 
 	if dll.length == 1 {
 		dll.head = nil
@@ -249,8 +249,8 @@ func (dll *DoublyLinkedList) DeleteHead() (bool, any) {
 		return true, oldData
 	}
 
-	dll.head = dll.head.next
-	dll.head.prev = nil
+	dll.head = dll.head.Next
+	dll.head.Prev = nil
 	dll.decrementCounter()
 	return true, oldData
 }
@@ -261,7 +261,7 @@ func (dll *DoublyLinkedList) DeleteTail() (bool, any) {
 		fmt.Println("Linked list is empty.")
 		return false, 0
 	}
-	oldData := dll.tail.data
+	oldData := dll.tail.Data
 
 	if dll.length == 1 {
 		dll.head = nil
@@ -270,8 +270,8 @@ func (dll *DoublyLinkedList) DeleteTail() (bool, any) {
 		return true, oldData
 	}
 
-	dll.tail = dll.tail.prev
-	dll.tail.next = nil
+	dll.tail = dll.tail.Prev
+	dll.tail.Next = nil
 	dll.decrementCounter()
 
 	return true, oldData
@@ -295,7 +295,7 @@ func (dll *DoublyLinkedList) DeleteAt(index int) (bool, any) {
 
 	if dll.length == 1 {
 		if counter == index {
-			oldData := dll.head.data
+			oldData := dll.head.Data
 			dll.head = nil
 			dll.tail = nil
 			dll.decrementCounter()
@@ -313,18 +313,18 @@ func (dll *DoublyLinkedList) DeleteAt(index int) (bool, any) {
 
 	for counter <= index {
 		if counter == index {
-			oldData := current.data
-			preNode := current.prev
-			postNode := current.next
+			oldData := current.Data
+			preNode := current.Prev
+			postNode := current.Next
 
-			preNode.next = postNode
-			postNode.prev = preNode
+			preNode.Next = postNode
+			postNode.Prev = preNode
 
 			dll.decrementCounter()
 			return true, oldData
 		}
 		counter++
-		current = current.next
+		current = current.Next
 	}
 
 	return false, nil
@@ -345,7 +345,7 @@ func (dll *DoublyLinkedList) Truncate(n int) error {
 		return err
 	}
 
-	currentNode.next = nil
+	currentNode.Next = nil
 	dll.tail = currentNode
 
 	return nil
@@ -368,7 +368,7 @@ func (dll *DoublyLinkedList) GetHeadData() (any, error) {
 	if dll.IsEmpty() {
 		return nil, fmt.Errorf("Linked list is empty.")
 	}
-	return dll.head.data, nil
+	return dll.head.Data, nil
 }
 
 // show the tail node
@@ -384,7 +384,7 @@ func (dll *DoublyLinkedList) GetTailData() (any, error) {
 	if dll.IsEmpty() {
 		return nil, fmt.Errorf("Linked list is empty.")
 	}
-	return dll.tail.data, nil
+	return dll.tail.Data, nil
 }
 
 // get an element of an given index and a bool status that the index exist or not
@@ -401,7 +401,7 @@ func (dll *DoublyLinkedList) GetAt(index int) (*Node, error) {
 		if counter == index {
 			return currentNode, nil
 		}
-		currentNode = currentNode.next
+		currentNode = currentNode.Next
 		counter++
 	}
 
@@ -418,10 +418,10 @@ func (dll *DoublyLinkedList) Search(data any) (*Node, error) {
 	currentNode := dll.head
 
 	for currentNode != nil {
-		if currentNode.data == data {
+		if currentNode.Data == data {
 			return currentNode, nil
 		}
-		currentNode = currentNode.next
+		currentNode = currentNode.Next
 	}
 
 	return nil, fmt.Errorf("element not found")
@@ -453,7 +453,7 @@ func (dll *DoublyLinkedList) Update(data, replace any) error {
 		return err
 	}
 
-	targetNode.data = replace
+	targetNode.Data = replace
 	return nil
 }
 
@@ -467,11 +467,11 @@ func (dll *DoublyLinkedList) Reverse() {
 	current := dll.head
 
 	for current != nil {
-		temp := current.prev
-		current.prev = current.next
-		current.next = temp
+		temp := current.Prev
+		current.Prev = current.Next
+		current.Next = temp
 
-		current = current.prev
+		current = current.Prev
 	}
 	temp := dll.head
 
@@ -489,14 +489,14 @@ func (dll *DoublyLinkedList) RemoveDuplicates() {
 	seen := make(map[any]bool)
 
 	current := dll.head
-	seen[current.data] = true
+	seen[current.Data] = true
 
-	for current.next != nil {
-		if seen[current.next.data] {
-			current.next = current.next.next
+	for current.Next != nil {
+		if seen[current.Next.Data] {
+			current.Next = current.Next.Next
 		} else {
-			seen[current.next.data] = true
-			current = current.next
+			seen[current.Next.Data] = true
+			current = current.Next
 		}
 
 	}
@@ -512,9 +512,9 @@ func (dll *DoublyLinkedList) ToSlice() []any {
 	sllSlice := []any{}
 	currentNode := dll.head
 	for currentNode != nil {
-		sllSlice = append(sllSlice, currentNode.data)
+		sllSlice = append(sllSlice, currentNode.Data)
 
-		currentNode = currentNode.next
+		currentNode = currentNode.Next
 	}
 
 	return sllSlice
@@ -544,8 +544,8 @@ func (dll *DoublyLinkedList) PrintList() {
 	currentNode := dll.head
 
 	for currentNode != nil {
-		fmt.Println("Data :", currentNode.data)
-		currentNode = currentNode.next
+		fmt.Println("Data :", currentNode.Data)
+		currentNode = currentNode.Next
 	}
 }
 
