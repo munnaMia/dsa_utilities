@@ -47,21 +47,19 @@ func (dll *DoublyLinkedList) InsertAtHead(data any) {
 func (dll *DoublyLinkedList) InsertAtTail(data any) {
 	defer dll.incrementCounter()
 
-	if dll.IsEmpty() {
-		dll.head = &Node{
-			Prev: nil,
-			Data: data,
-			Next: nil,
-		}
-		dll.tail = dll.head
-		return
-	}
-
-	dll.tail.Next = &Node{
+	newNode := &Node{
 		Prev: dll.tail,
 		Data: data,
 		Next: nil,
 	}
+
+	if dll.IsEmpty() {
+		dll.head = newNode
+		dll.tail = newNode
+		return
+	}
+
+	dll.tail.Next = newNode
 
 	dll.tail = dll.tail.Next
 }
@@ -191,47 +189,37 @@ func (dll *DoublyLinkedList) InsertBefore(targetData any, data any) {
 // */
 
 // delete first matched element and return the deleted element
-func (dll *DoublyLinkedList) Delete(data any) (bool, any) {
+func (dll *DoublyLinkedList) Delete(data any) (any, bool) {
 	if dll.IsEmpty() {
 		fmt.Println("Linked list is empty.")
-		return false, 0
+		return nil, false
 	}
+
 	targetNode, _ := dll.Search(data)
+	if targetNode == nil {
+		fmt.Println("data not found")
+		return nil, false
+	}
+
+	temp := targetNode.Data
 
 	if dll.length == 1 {
-		if targetNode.Data == dll.head.Data {
-			oldData := dll.head.Data
-			dll.head = nil
-			dll.tail = nil
-			dll.decrementCounter()
-			return true, oldData
-		}
-	}
-
-	if dll.head == targetNode {
-		oldData := dll.head.Data
+		dll.head = nil
+		dll.tail = nil
+	} else if dll.head == targetNode {
 		dll.head = dll.head.Next
 		dll.head.Prev = nil
-		dll.decrementCounter()
-		return true, oldData
-	}
-
-	if dll.tail == targetNode {
-		oldData := dll.tail.Data
+	} else if dll.tail == targetNode {
 		dll.tail = dll.tail.Prev
 		dll.tail.Next = nil
-		dll.decrementCounter()
-		return true, oldData
+	} else {
+		preNode := targetNode.Prev
+		preNode.Next = targetNode.Next
+		preNode.Next.Prev = preNode
 	}
 
-	oldData := targetNode.Data
-	preNode := targetNode.Prev
-	postNode := targetNode.Next
-
-	preNode.Next = postNode
-	postNode.Prev = preNode
 	dll.decrementCounter()
-	return true, oldData
+	return temp, true
 }
 
 // delete head node.
@@ -531,7 +519,7 @@ func (dll *DoublyLinkedList) Length() int {
 
 // check the linked list is empty or not
 func (dll *DoublyLinkedList) IsEmpty() bool {
-	return dll.head == nil
+	return dll.length == 0
 }
 
 // Print the single linked list

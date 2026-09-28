@@ -62,6 +62,6 @@ func (st *Stack) IsEmpty() bool {
 }
 
 // Show stack is empty or not
-func (st *Stack) Sizz() int {
+func (st *Stack) Size() int {
 	return st.singleLL.Length()
 }
