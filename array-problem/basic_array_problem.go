@@ -187,3 +187,21 @@ func FindUnionOfSortedArray(arr1, arr2 []int) (result []int) {
 
 	return
 }
+
+func FindIntersactionOfSortedArray(arr1, arr2 []int) (result []int) {
+	i, j := 0, 0
+
+	for i < len(arr1) && j < len(arr2) {
+		if arr1[i] == arr2[j] {
+			result = append(result, arr1[i])
+			i++
+			j++
+		} else if arr1[i] <= arr2[j] {
+			i++
+		} else {
+			j++
+		}
+	}
+
+	return
+}
