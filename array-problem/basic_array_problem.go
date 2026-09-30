@@ -1,5 +1,7 @@
 package arrayproblem
 
+import "fmt"
+
 func LargestElem(arr []int) int {
 	l := arr[0]
 
@@ -102,4 +104,44 @@ func LeftRotateByOne(arr []int) {
 	}
 
 	arr[len(arr)-1] = temp
+}
+
+func LeftRotateByK(k int, arr []int) {
+	if k < 0 {
+		return
+	}
+	k = k % len(arr)
+
+	temp := append(make([]int, 0), arr[:k]...)
+
+	fmt.Println(temp)
+
+	for i := k; i < len(arr); i++ {
+		arr[i-k] = arr[i]
+	}
+
+	for i, v := range temp {
+		arr[len(arr)-k+i] = v
+	}
+}
+
+func LeftRotateByKoptimal(k int, arr []int) {
+	if k < 0 {
+		return
+	}
+	k = k%len(arr) - 1
+
+	reverse(0, k, arr)
+	reverse(k+1, len(arr)-1, arr)
+	reverse(0, len(arr)-1, arr)
+}
+
+func reverse(start, end int, arr []int) {
+	for start < end {
+		temp := arr[start]
+		arr[start] = arr[end]
+		arr[end] = temp
+		start++
+		end--
+	}
 }
