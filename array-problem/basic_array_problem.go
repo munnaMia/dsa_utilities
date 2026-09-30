@@ -166,3 +166,24 @@ func MoveZeroToEnd(arr []int) {
 		j++
 	}
 }
+
+func FindUnionOfSortedArray(arr1, arr2 []int) (result []int) {
+	for _, v := range arr1 {
+		if len(result) == 0 {
+			result = append(result, v)
+		}
+		if v != result[len(result)-1] {
+			result = append(result, v)
+		}
+	}
+	for _, v := range arr2 {
+		if len(result) == 0 {
+			result = append(result, v)
+		}
+		if v > result[len(result)-1] && v != result[len(result)-1] {
+			result = append(result, v)
+		}
+	}
+
+	return
+}
