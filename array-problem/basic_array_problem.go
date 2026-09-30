@@ -28,7 +28,7 @@ func MaximuxConsOnes(arr []int) int {
 		f++
 	}
 
-	return  count
+	return count
 }
 
 func MissingNum(arr []int) int {
@@ -86,12 +86,20 @@ func RemoveDuplicateFromSorted(arr []int) []int {
 	return arr[:f+1]
 }
 
-
-func FindAppareOnce(arr[]int)int {
-	n := 0 
+func FindAppareOnce(arr []int) int {
+	n := 0
 	for _, v := range arr {
-		n = n^v
+		n = n ^ v
 	}
 
-	return  n
+	return n
+}
+
+func LeftRotateByOne(arr []int) {
+	temp := arr[0]
+	for i := 1; i < len(arr); i++ {
+		arr[i-1] = arr[i]
+	}
+
+	arr[len(arr)-1] = temp
 }
