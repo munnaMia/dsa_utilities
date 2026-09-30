@@ -145,3 +145,24 @@ func reverse(start, end int, arr []int) {
 		end--
 	}
 }
+
+func MoveZeroToEnd(arr []int) {
+	j := -1
+	for i, v := range arr {
+		if v == 0 {
+			j = i
+			break
+		}
+	}
+
+	for i := j + 1; i < len(arr); {
+		if arr[i] == 0 {
+			i++
+			continue
+		}
+		temp := arr[j]
+		arr[j] = arr[i]
+		arr[i] = temp
+		j++
+	}
+}
